@@ -1,0 +1,71 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{094DDF9F-CFC9-486B-805A-47C32BF549B6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{80AF1F91-47E1-4614-AAEA-E1B9E1D4E48B}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Hydra.Swamp", "src\Hydra.Swamp\Hydra.Swamp.xproj", "{E26E948F-8908-47CC-9889-3FCF1520B2BA}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "production", "gentelella\production\", "{6555776A-1D14-4DBF-934D-0D856459F1A5}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_65276"
+		Debug.AspNetCompiler.PhysicalPath = "gentelella\production\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_65276\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_65276"
+		Release.AspNetCompiler.PhysicalPath = "gentelella\production\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_65276\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "65276"
+		SlnRelativePath = "gentelella\production\"
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Hydra.Swamp.Agent", "src\Hydra.Swamp.Agent\Hydra.Swamp.Agent.xproj", "{EA7C540B-7E6D-4B33-BA5E-BBBC7BF1E135}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Hydra.Swamp.UI", "src\Hydra.Swamp.UI\Hydra.Swamp.UI.xproj", "{CE9C7A69-9708-4653-A0B6-C9AE891488F6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E26E948F-8908-47CC-9889-3FCF1520B2BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E26E948F-8908-47CC-9889-3FCF1520B2BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E26E948F-8908-47CC-9889-3FCF1520B2BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E26E948F-8908-47CC-9889-3FCF1520B2BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6555776A-1D14-4DBF-934D-0D856459F1A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6555776A-1D14-4DBF-934D-0D856459F1A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6555776A-1D14-4DBF-934D-0D856459F1A5}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{6555776A-1D14-4DBF-934D-0D856459F1A5}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{EA7C540B-7E6D-4B33-BA5E-BBBC7BF1E135}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA7C540B-7E6D-4B33-BA5E-BBBC7BF1E135}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA7C540B-7E6D-4B33-BA5E-BBBC7BF1E135}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA7C540B-7E6D-4B33-BA5E-BBBC7BF1E135}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE9C7A69-9708-4653-A0B6-C9AE891488F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE9C7A69-9708-4653-A0B6-C9AE891488F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE9C7A69-9708-4653-A0B6-C9AE891488F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE9C7A69-9708-4653-A0B6-C9AE891488F6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E26E948F-8908-47CC-9889-3FCF1520B2BA} = {094DDF9F-CFC9-486B-805A-47C32BF549B6}
+		{EA7C540B-7E6D-4B33-BA5E-BBBC7BF1E135} = {094DDF9F-CFC9-486B-805A-47C32BF549B6}
+		{CE9C7A69-9708-4653-A0B6-C9AE891488F6} = {094DDF9F-CFC9-486B-805A-47C32BF549B6}
+	EndGlobalSection
+EndGlobal
