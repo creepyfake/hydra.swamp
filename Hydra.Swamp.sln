@@ -33,6 +33,10 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "production", "gentelella\pr
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Hydra.Swamp.UI", "src\Hydra.Swamp.UI\Hydra.Swamp.UI.xproj", "{CE9C7A69-9708-4653-A0B6-C9AE891488F6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.Swamp.Service", "Hydra.Swamp.Service\Hydra.Swamp.Service.csproj", "{374FDB17-EE38-4753-8A0A-1947A44CABBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.Swamp.Agent", "Hydra.Swamp.Agent\Hydra.Swamp.Agent.csproj", "{A2D49BC9-BF31-4599-A258-485591B5D25F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,11 +51,21 @@ Global
 		{CE9C7A69-9708-4653-A0B6-C9AE891488F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE9C7A69-9708-4653-A0B6-C9AE891488F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE9C7A69-9708-4653-A0B6-C9AE891488F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{374FDB17-EE38-4753-8A0A-1947A44CABBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{374FDB17-EE38-4753-8A0A-1947A44CABBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{374FDB17-EE38-4753-8A0A-1947A44CABBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{374FDB17-EE38-4753-8A0A-1947A44CABBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2D49BC9-BF31-4599-A258-485591B5D25F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2D49BC9-BF31-4599-A258-485591B5D25F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2D49BC9-BF31-4599-A258-485591B5D25F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2D49BC9-BF31-4599-A258-485591B5D25F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{CE9C7A69-9708-4653-A0B6-C9AE891488F6} = {094DDF9F-CFC9-486B-805A-47C32BF549B6}
+		{374FDB17-EE38-4753-8A0A-1947A44CABBE} = {094DDF9F-CFC9-486B-805A-47C32BF549B6}
+		{A2D49BC9-BF31-4599-A258-485591B5D25F} = {094DDF9F-CFC9-486B-805A-47C32BF549B6}
 	EndGlobalSection
 EndGlobal
