@@ -8,7 +8,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Hydra.Swamp.Agent.Modules.DeployExecutors;
 using Hydra.Swamp.Agent.Modules.Repo;
+using Hydra.Sys.Config;
 using Hydra.Sys.IOC;
+using Newtonsoft.Json;
 
 namespace Hydra.Swamp.Agent.Modules
 {
@@ -22,11 +24,26 @@ namespace Hydra.Swamp.Agent.Modules
 
         private IHydraContainer cont;
 
-        public ModuleManager(IHydraContainer container)
+        private AgentEnvironment env;
+
+        public ModuleManager(IHydraContainer container, AgentEnvironment env)
         {
             this.cont = container;
+            this.env = env;
             deploymentTasks = new Dictionary<string, DeployTask>();
             modules = new List<ManagedModule>();
+
+            // refresh dell'installazione iniziale
+            refreshModuleList();
+        }
+
+        internal int GetNextInstance(List<ManagedModule> modules,  string modulename, string version)
+        {
+            if (modules.Count == 0 || !modules.Exists(m => m.Name == modulename && m.Version == version))
+                return 0;
+
+            int maxVersion = modules.Where(m=> m.Name == modulename && m.Version == version).Max(mod=>mod.Instance);
+            return ++maxVersion;
         }
 
         /// <summary>
@@ -36,8 +53,10 @@ namespace Hydra.Swamp.Agent.Modules
         /// <returns></returns>
         public async Task DeployModule(DeployDescription desc)
         {
-            IDeployExecutor executor=getExecutor(desc);
-            
+            BaseDeployExecutor executor=getExecutor(desc);
+
+            desc.RequestedInstance = GetNextInstance(modules, desc.ModuleName, desc.ModuleVersion);
+
             //lancia il task di deploy
             CancellationTokenSource tokenSource = new CancellationTokenSource();
             CancellationToken token = tokenSource.Token;
@@ -69,12 +88,12 @@ namespace Hydra.Swamp.Agent.Modules
         }
         
         // in base al tipo di deploy fa partire un determinato task
-        private IDeployExecutor getExecutor(DeployDescription desc)
+        private BaseDeployExecutor getExecutor(DeployDescription desc)
         {
             if (desc.DeployType == BatExecutor.NAME)
-                return new BatExecutor(cont.GetInstance<IScriptRepository>());
+                return new BatExecutor(cont.GetInstance<IScriptRepository>(),cont.GetInstance<AgentEnvironment>());
             if (desc.DeployType == NantExecutor.NAME)
-                return new NantExecutor();
+                return new NantExecutor(cont.GetInstance<IScriptRepository>(), cont.GetInstance<AgentEnvironment>());
 
             return null;
         }
@@ -85,7 +104,20 @@ namespace Hydra.Swamp.Agent.Modules
             //init
             modules.Clear();
             
-            Directory.EnumerateDirectories()
+            string modulesPath = env[AgentParameter.AGENT_MODULES_DIR.ToString()];
+
+            IEnumerable<string> modDirs = Directory.EnumerateDirectories(modulesPath);
+            foreach (string modDir in modDirs)
+            {
+                string fileDesc = Path.Combine(modDir, "module.desc");
+                if (!File.Exists(fileDesc))
+                {
+                    //errore non esiste il descrittore
+                    continue;
+                }
+                ManagedModule mm = JsonConvert.DeserializeObject<ManagedModule>(File.ReadAllText(fileDesc));
+                modules.Add(mm);
+            }
 
         }
         /// <summary>

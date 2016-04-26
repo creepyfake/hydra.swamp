@@ -15,21 +15,54 @@ namespace Hydra.Swamp.Agent.Tests
     public class ModuleManagerTests
     {
         [Test]
+        public void TestGetNextInstance()
+        {
+            SimpleInjectorContainer cont = new SimpleInjectorContainer();
+            cont.ForTypeUse<IScriptRepository, LocalScriptRepository>();
+            AgentEnvironment env = new AgentEnvironment();
+
+            ModuleManager manager = new ModuleManager(cont, env);
+
+            Assert.That(manager.GetNextInstance(new List<ManagedModule>(), "testo", "1.0.0"), Is.EqualTo(0));
+
+            List<ManagedModule> modules = new List<ManagedModule>();
+            modules.Add(new ManagedModule
+            {
+                Name = "test",
+                Version = "1.0.0",
+                Instance = 0
+            });
+        
+            Assert.That(manager.GetNextInstance(modules,"testAA","1.0.0"),Is.EqualTo(0));
+
+            Assert.That(manager.GetNextInstance(modules, "test", "1.0.0"), Is.EqualTo(1));
+
+            modules.Add(new ManagedModule
+            {
+                Name = "test",
+                Version = "1.0.0",
+                Instance = 2
+            });
+            Assert.That(manager.GetNextInstance(modules, "test", "1.0.0"), Is.EqualTo(3));
+        }
+
+        [Test]
         public async void TestBatTask()
         {
             
             SimpleInjectorContainer cont = new SimpleInjectorContainer();
             cont.ForTypeUse<IScriptRepository,LocalScriptRepository>();
+            AgentEnvironment env = new AgentEnvironment();
 
-            ModuleManager manager = new ModuleManager(cont);
-
-            string localDir = Environment.CurrentDirectory + @"\..\scripts\";
+            ModuleManager manager = new ModuleManager(cont,env);
+            
             DeployDescription desc = new DeployDescription
             {
                 DeployType = BatExecutor.NAME,
                 ModuleName = "test",
-                ArtifactUrl = "",
-                ScriptUrl = localDir + "script_test.cmd"
+                ModuleVersion = "v1.0.0.0",
+                ArtifactUrl = "test_v1.0.0.0.zip",
+                ScriptUrl = "script_test.cmd"
             };
             desc.Parameters.Add("arg1", "pippo");
             desc.Parameters.Add("arg2", "foo bar");

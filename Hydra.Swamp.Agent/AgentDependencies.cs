@@ -14,10 +14,11 @@ namespace Hydra.Swamp.Agent
     {
         public void RegisterDependencies(IHydraContainer cont)
         {
+            AgentEnvironment env = new AgentEnvironment();
             // TRANSIENT
             cont.ForTypeUse<IScriptRepository,LocalScriptRepository>();
             // SINGLETONS
-            cont.ForTypeUseSingleton<ModuleManager>(new ModuleManager(cont));
+            cont.ForTypeUseSingleton<ModuleManager>(new ModuleManager(cont,env));
             cont.ForTypeUseSingleton<StatusManager>(new StatusManager());
 
         }

@@ -31,8 +31,9 @@ namespace Hydra.Swamp.Agent
             AgentConfiguration cfgLocal = loadLocalCfg();
 
             // Working dir
-            parameters.Add(AgentParameter.AGENT_DIR.ToString(),
-                Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "..");
+            string installDir = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
+
+            parameters.Add(AgentParameter.AGENT_DIR.ToString(),installDir);
             if (cfgEnv!=null && !string.IsNullOrEmpty(cfgEnv.WorkingDir))
                 parameters[AgentParameter.AGENT_DIR.ToString()] = cfgEnv.WorkingDir;
             if(cfgLocal!=null && !string.IsNullOrEmpty(cfgLocal.WorkingDir))
@@ -40,34 +41,34 @@ namespace Hydra.Swamp.Agent
 
             //bin dir
             parameters.Add(AgentParameter.AGENT_BIN_DIR.ToString(),
-                Path.Combine(Directory.GetCurrentDirectory(),"..","bin"));
+                Path.Combine(installDir,"bin"));
             if (cfgEnv != null && !string.IsNullOrEmpty(cfgEnv.BinDir))
-                parameters[AgentParameter.AGENT_BIN_DIR.ToString()] = cfgEnv.BinDir;
+                parameters[AgentParameter.AGENT_BIN_DIR.ToString()] = Path.Combine(installDir,cfgEnv.BinDir);
             if (cfgLocal != null && !string.IsNullOrEmpty(cfgLocal.BinDir))
                 parameters[AgentParameter.AGENT_BIN_DIR.ToString()] = cfgLocal.BinDir;
 
             //data
             parameters.Add(AgentParameter.AGENT_DATA_DIR.ToString(),
-                Path.Combine(Directory.GetCurrentDirectory(), "..", "data"));
+                Path.Combine(installDir, "data"));
             if (cfgEnv != null && !string.IsNullOrEmpty(cfgEnv.DataDir))
-                parameters[AgentParameter.AGENT_DATA_DIR.ToString()] = cfgEnv.DataDir;
+                parameters[AgentParameter.AGENT_DATA_DIR.ToString()] = Path.Combine(installDir,cfgEnv.DataDir);
             if (cfgLocal != null && !string.IsNullOrEmpty(cfgLocal.DataDir))
                 parameters[AgentParameter.AGENT_DATA_DIR.ToString()] = cfgLocal.DataDir;
 
             //modules
             parameters.Add(AgentParameter.AGENT_MODULES_DIR.ToString(),
-                Path.Combine(Directory.GetCurrentDirectory(), "..", "modules"));
+                Path.Combine(installDir, "modules"));
             if (cfgEnv != null && !string.IsNullOrEmpty(cfgEnv.ModulesDir))
-                parameters[AgentParameter.AGENT_MODULES_DIR.ToString()] = cfgEnv.ModulesDir;
+                parameters[AgentParameter.AGENT_MODULES_DIR.ToString()] = Path.Combine(installDir, cfgEnv.ModulesDir);
             if (cfgLocal != null && !string.IsNullOrEmpty(cfgLocal.ModulesDir))
                 parameters[AgentParameter.AGENT_MODULES_DIR.ToString()] = cfgLocal.ModulesDir;
 
 
             //scripts
             parameters.Add(AgentParameter.AGENT_SCRIPTS_DIR.ToString(),
-                Path.Combine(Directory.GetCurrentDirectory(), "..", "scripts"));
+                Path.Combine(installDir, "scripts"));
             if (cfgEnv != null && !string.IsNullOrEmpty(cfgEnv.ScriptsDir))
-                parameters[AgentParameter.AGENT_SCRIPTS_DIR.ToString()] = cfgEnv.ScriptsDir;
+                parameters[AgentParameter.AGENT_SCRIPTS_DIR.ToString()] = Path.Combine(installDir, cfgEnv.ScriptsDir);
             if (cfgLocal != null && !string.IsNullOrEmpty(cfgLocal.ScriptsDir))
                 parameters[AgentParameter.AGENT_SCRIPTS_DIR.ToString()] = cfgLocal.ScriptsDir;
 

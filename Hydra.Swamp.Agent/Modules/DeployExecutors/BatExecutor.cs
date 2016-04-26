@@ -9,37 +9,24 @@ using Hydra.Swamp.Agent.Modules.Repo;
 
 namespace Hydra.Swamp.Agent.Modules.DeployExecutors
 {
-    public class BatExecutor : IDeployExecutor
+    public class BatExecutor : BaseDeployExecutor
     {
         public static string NAME = "BAT";
+        
+        public BatExecutor(IScriptRepository scriptRepo, AgentEnvironment env):base(scriptRepo,env)
+        {}
 
-        private IScriptRepository scriptRepo;
-
-        public BatExecutor(IScriptRepository scriptRepo)
+        protected override DeployResult doDeploy(DeployDescription desc, DeployResult result)
         {
-            this.scriptRepo = scriptRepo;
-        }
-
-        public DeployResult DeployModule(DeployDescription desc)
-        {
-            DeployResult result = new DeployResult();
-            result.StartTime = DateTime.UtcNow;
-            
-            // controlla che siano presenti i tool e le impostazioni di ambiente
-            checkEnvironment();
-
             // recupera lo script
             string script = scriptRepo.GetScript(desc.ScriptUrl);
             if (string.IsNullOrEmpty(script))
                 throw new ArgumentException(string.Format("Impossibile trovare lo script: {0}", desc.ScriptUrl));
             
-            string deployScriptName = string.Format("{0}{1}{2}.{3}.cmd",
-                                                    Path.GetDirectoryName(desc.ScriptUrl),
-                                                    Path.DirectorySeparatorChar,
-                                                    Path.GetFileNameWithoutExtension(desc.ScriptUrl),
-                                                    desc.DeployID);
+            string deployScriptName = Path.Combine(workspace,scriptRepo.GetScriptFileName(desc.ScriptUrl));
+                
             // sostituisce i parametri nello script
-            script =replaceVariables(script);
+            script =replaceVariables(script,workspace,desc);
             // risalva l'istanza specifica di script
             scriptRepo.SaveScript(deployScriptName, script);
 
@@ -56,7 +43,7 @@ namespace Hydra.Swamp.Agent.Modules.DeployExecutors
             }
 
             result.Success = true;
-            result.EndTime = DateTime.UtcNow;
+            
             return result;
         }
 
@@ -67,12 +54,23 @@ namespace Hydra.Swamp.Agent.Modules.DeployExecutors
             return parameter;
         }
 
-        private string replaceVariables(string script)
+        private string replaceVariables(string script,string workspace,DeployDescription desc)
         {
+            script = script.Replace("#DESTINATION_DIR", moduleDir);
+            script = script.Replace("#WORKSPACE", workspace);
+            script = script.Replace("#AGENT_DIR", env[AgentParameter.AGENT_DIR.ToString()]);
+            script = script.Replace("#BIN_DIR", env[AgentParameter.AGENT_BIN_DIR.ToString()]);
+            script = script.Replace("#DATA_DIR", env[AgentParameter.AGENT_DATA_DIR.ToString()]);
+            script = script.Replace("#MODULES_DIR", env[AgentParameter.AGENT_MODULES_DIR.ToString()]);
+            script = script.Replace("#SCRIPTS_DIR", env[AgentParameter.AGENT_SCRIPTS_DIR.ToString()]);
+            script = script.Replace("#MODULE_NAME", desc.ModuleName);
+            script = script.Replace("#MODULE_VERSION", desc.ModuleVersion);
+            script = script.Replace("#ARTIFACT_URL", desc.ArtifactUrl);
+            
             return script;
         }
 
-        private void checkEnvironment()
+        protected override void checkEnvironment()
         {
             // verifica presenza tool
 

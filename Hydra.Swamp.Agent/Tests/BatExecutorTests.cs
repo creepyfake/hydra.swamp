@@ -16,15 +16,16 @@ namespace Hydra.Swamp.Agent.Tests
         [Test]
         public void TestScriptExec()
         {
-            LocalScriptRepository repo = new LocalScriptRepository();
-            BatExecutor executor = new BatExecutor(repo);
+            LocalScriptRepository repo = new LocalScriptRepository(new AgentEnvironment());
+            BatExecutor executor = new BatExecutor(repo,new AgentEnvironment());
 
             DeployDescription desc = new DeployDescription
             {
                 DeployType = BatExecutor.NAME,
                 ModuleName = "test",
+                ModuleVersion = "v1.0.0.0",
                 ArtifactUrl = "",
-                ScriptUrl = "script_test.cmd"
+                ScriptUrl = "script_test.cmdo"
             };
             desc.Parameters.Add("arg1","pippo");
             desc.Parameters.Add("arg2", "foo bar");
@@ -32,13 +33,13 @@ namespace Hydra.Swamp.Agent.Tests
             //DeployResult res =executor.DeployModule(desc);
             Assert.Throws<ArgumentException>(() => executor.DeployModule(desc));
 
-            string localDir = Environment.CurrentDirectory+@"\..\scripts\";
             desc = new DeployDescription
             {
                 DeployType = BatExecutor.NAME,
                 ModuleName = "test",
+                ModuleVersion = "v1.0.0.0",
                 ArtifactUrl = "",
-                ScriptUrl = localDir+"script_test.cmd"
+                ScriptUrl = "script_test.cmd"
             };
             desc.Parameters.Add("arg1", "pippo");
             desc.Parameters.Add("arg2", "foo bar");
@@ -51,8 +52,9 @@ namespace Hydra.Swamp.Agent.Tests
             {
                 DeployType = BatExecutor.NAME,
                 ModuleName = "test",
+                ModuleVersion = "v1.0.0.0",
                 ArtifactUrl = "",
-                ScriptUrl = localDir + "script_test.cmd"
+                ScriptUrl = "script_test.cmd"
             };
             desc.Parameters.Add("arg1", "pippo");
             desc.Parameters.Add("arg2", "foo bar");
